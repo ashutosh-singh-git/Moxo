@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moxo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moxo
+  template:
+    metadata:
+      labels:
+        app: moxo
+    spec:
+      containers:
+        - name: app
+          image: gcr.io/bikerapp-e3150/moxo:1.0.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: mongo_host
+              value: mongo
+          imagePullPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: moxo
+spec:
+  selector:
+    app: moxo
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: LoadBalancer

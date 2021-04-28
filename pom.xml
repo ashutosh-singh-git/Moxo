@@ -80,10 +80,13 @@
                 <configuration>
                     <from>
                         <image>maven:3.8.1-openjdk-16-slim</image>
+                        <auth>
+                            <username>fabashutosh</username>
+                            <password>Reb.1ocker</password>
+                        </auth>
                     </from>
                     <to>
                         <image>gcr.io/bikerapp-e3150/moxo</image>
-                        <credHelper>gcr</credHelper>
                     </to>
                     <container>
                         <environment>

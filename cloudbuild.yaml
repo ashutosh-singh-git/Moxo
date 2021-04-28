@@ -1,6 +1,7 @@
 steps:
   - name: 'maven'
     id: compile
+    entrypoint: mvn
     args:
       - 'compile'
       - 'jib:build'

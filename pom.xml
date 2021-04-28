@@ -79,11 +79,17 @@
                 <version>3.0.0</version>
                 <configuration>
                     <from>
-                        <image>adoptopenjdk/openjdk16:alpine</image>
+                        <image>maven:3.8.1-openjdk-16-slim</image>
                     </from>
                     <to>
                         <image>gcr.io/bikerapp-e3150/moxo</image>
+                        <credHelper>gcr</credHelper>
                     </to>
+                    <container>
+                        <environment>
+                            <mongo_host>host.docker.internal</mongo_host>
+                        </environment>
+                    </container>
                 </configuration>
             </plugin>
             <plugin>

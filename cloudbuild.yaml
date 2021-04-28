@@ -1,5 +1,5 @@
 steps:
-  - name: 'mvn'
+  - name: 'gcr.io/cloud-builders/mvn'
     id: compile
     args:
       - 'clean'

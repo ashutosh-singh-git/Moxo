@@ -1,5 +1,5 @@
 steps:
-  - name: 'maven'
+  - name: 'maven:3.8.1-openjdk-16-slim'
     id: compile
     entrypoint: mvn
     args:
@@ -32,7 +32,7 @@ steps:
         'image',
         'deployment',
         'moxo',
-        'moxo=gcr.io/$PROJECT_ID/moxo:latest'
+        'app=gcr.io/$PROJECT_ID/moxo:latest'
     ]
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-a'

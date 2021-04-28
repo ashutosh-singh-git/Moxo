@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: gcr.io/bikerapp-e3150/moxo:1.0.0
+          image: gcr.io/bikerapp-e3150/moxo:latest
           ports:
             - containerPort: 8080
           env:

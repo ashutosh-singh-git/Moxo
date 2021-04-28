@@ -2,22 +2,22 @@ steps:
   - name: 'gcr.io/cloud-builders/mvn'
     id: compile
     args:
-      - 'clean'
-      - 'install'
+      - 'compile'
+      - 'jib:build'
 
-  - name: 'gcr.io/cloud-builders/docker'
-    id: Build
-    args:
-      - 'build'
-      - '-t'
-      - 'gcr.io/$PROJECT_ID/moxo:$SHORT_SHA'
-      - '.'
-
-  - name: 'gcr.io/cloud-builders/docker'
-    id: Push
-    args:
-      - 'push'
-      - 'gcr.io/$PROJECT_ID/moxo:$SHORT_SHA'
+#  - name: 'gcr.io/cloud-builders/docker'
+#    id: Build
+#    args:
+#      - 'build'
+#      - '-t'
+#      - 'gcr.io/$PROJECT_ID/moxo:$SHORT_SHA'
+#      - '.'
+#
+#  - name: 'gcr.io/cloud-builders/docker'
+#    id: Push
+#    args:
+#      - 'push'
+#      - 'gcr.io/$PROJECT_ID/moxo:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/kubectl'
     args: [ 'apply', '-f', 'kube/' ]
@@ -31,7 +31,7 @@ steps:
         'image',
         'deployment',
         'moxo',
-        'moxo=gcr.io/$PROJECT_ID/<app-name>:$SHORT_SHA'
+        'moxo=gcr.io/$PROJECT_ID/moxo:latest'
     ]
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-a'

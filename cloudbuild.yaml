@@ -1,4 +1,10 @@
 steps:
+  - name: 'mvn'
+    id: compile
+    args:
+      - 'clean'
+      - 'install'
+
   - name: 'gcr.io/cloud-builders/docker'
     id: Build
     args:

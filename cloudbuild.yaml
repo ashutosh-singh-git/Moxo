@@ -12,3 +12,21 @@ steps:
     args:
       - 'push'
       - 'gcr.io/$PROJECT_ID/moxo:$SHORT_SHA'
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: [ 'apply', '-f', 'kube/' ]
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=moxo-gke'
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: [
+        'set',
+        'image',
+        'deployment',
+        'moxo',
+        'moxo=gcr.io/$PROJECT_ID/<app-name>:$SHORT_SHA'
+    ]
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=moxo-gke'

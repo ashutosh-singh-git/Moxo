@@ -1,5 +1,5 @@
 steps:
-  - name: 'maven:3.8.1-openjdk-16-slim'
+  - name: 'maven@sha256:c08c6b7a43316bac7c18aa562c6deea93e493eb17750685d19bca80837359dbd'
     id: compile
     entrypoint: mvn
     args:

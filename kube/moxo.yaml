@@ -20,6 +20,8 @@ spec:
           env:
             - name: mongo_host
               value: mongo
+            - name: mongo_port
+              value: 27017
           imagePullPolicy: Always
 
 ---

@@ -14,11 +14,10 @@ steps:
 
   - name: 'gcr.io/cloud-builders/kubectl'
     args: [
-        'set',
-        'image',
-        'deployment',
-        'moxo',
-        'app=gcr.io/$PROJECT_ID/moxo:latest'
+        'rollout',
+        'restart',
+        'deploy',
+        'moxo'
     ]
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-a'

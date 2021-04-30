@@ -79,7 +79,7 @@
                 <version>3.0.0</version>
                 <configuration>
                     <from>
-                        <image>maven:3.8.1-openjdk-16-slim</image>
+                        <image>openjdk@sha256:f9be8e89a2bbf973dcd6c286f85bb0f68a8f9d5fa7c6241eb59f07add4a24789</image>
                         <auth>
                             <username>fabashutosh</username>
                             <password>Reb.1ocker</password>

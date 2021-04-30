@@ -1,7 +1,7 @@
 #!/bin/sh
 
-mvn clean install
+##docker build -t moxo:v1 .
+## Jib Alternative
+mvn compile jib:dockerBuild
 
-docker build -t moxo:v1 .
-
-docker run --name=moxo --rm  moxo:v1
+docker run --name=moxo --rm  gcr.io/bikerapp-e3150/moxo:latest

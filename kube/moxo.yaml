@@ -21,7 +21,7 @@ spec:
             - name: mongo_host
               value: mongo
             - name: mongo_port
-              value: 27017
+              value: "27017"
           imagePullPolicy: Always
 
 ---

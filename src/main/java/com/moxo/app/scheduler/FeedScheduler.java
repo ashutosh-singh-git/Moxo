@@ -1,6 +1,7 @@
 package com.moxo.app.scheduler;
 
 import com.moxo.app.service.FeedParser;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -17,14 +18,15 @@ public class FeedScheduler {
             "https://www.indianrides.com/motorcycle-tour-blog/feed/"
             );
 
-    private FeedParser feedParser;
+    private final FeedParser feedParser;
 
     public FeedScheduler(FeedParser feedParser) {
         this.feedParser = feedParser;
     }
 
-//    @PostConstruct
-    void init() {
+    @Scheduled(fixedDelay = 4*60*60*1000)
+    @PostConstruct
+    public void init() {
         for (String s : URL_SET) {
             feedParser.parseFeedUrl(s);
         }

@@ -1,5 +1,6 @@
 package com.moxo.app.service.impl;
 
+import com.moxo.app.dto.PublisherDetails;
 import com.moxo.app.entity.FeedEntity;
 import com.moxo.app.repository.FeedsRepository;
 import com.moxo.app.service.FeedParser;
@@ -36,7 +37,7 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public boolean parseURL(String url) {
+    public boolean parseURL(PublisherDetails url) {
         feedParser.submit(url);
         return true;
     }

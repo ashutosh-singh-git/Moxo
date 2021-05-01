@@ -1,5 +1,6 @@
 package com.moxo.app.service.impl;
 
+import com.moxo.app.dto.PublisherDetails;
 import com.moxo.app.entity.FeedEntity;
 import com.moxo.app.repository.FeedsRepository;
 import com.moxo.app.service.FeedParser;
@@ -13,11 +14,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,6 +30,7 @@ public class FeedParserImpl implements FeedParser {
     private final static Logger LOGGER = LoggerFactory.getLogger(FeedParserImpl.class);
 
     private final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(2);
+    private final Set<String> HTML_TYPES = Set.of(MediaType.TEXT_HTML_VALUE, "html");
 
     private final FeedsRepository feedsRepository;
 
@@ -35,13 +39,13 @@ public class FeedParserImpl implements FeedParser {
     }
 
     @Override
-    public void submit(String url) {
-        EXECUTOR_SERVICE.submit(() -> parseUrl(url));
+    public void submit(PublisherDetails details) {
+        EXECUTOR_SERVICE.submit(() -> parseUrl(details));
     }
 
-    private void parseUrl(String url) {
+    private void parseUrl(PublisherDetails details) {
         try {
-            SyndFeed rssFeed = new SyndFeedInput().build(new XmlReader(new URL(url)));
+            SyndFeed rssFeed = new SyndFeedInput().build(new XmlReader(new URL(details.getUrl())));
 
             if (rssFeed != null) {
 
@@ -54,12 +58,16 @@ public class FeedParserImpl implements FeedParser {
                     feedEntity.setAuthor(entry.getAuthor());
 
                     if (entry.getDescription() != null) {
+                        if (HTML_TYPES.contains(entry.getDescription().getType())) {
+                            Document doc = Jsoup.parse(entry.getDescription().getValue());
+                            feedEntity.setDescription(doc.text());
+                        }
                         feedEntity.setDescription(entry.getDescription().getValue());
                     }
 
                     if (!entry.getContents().isEmpty()) {
                         for (SyndContent content : entry.getContents()) {
-                            if (content.getType().equalsIgnoreCase("html")) {
+                            if (HTML_TYPES.contains(content.getType())) {
                                 Document doc = Jsoup.parse(content.getValue());
                                 if (feedEntity.getDescription().length() < doc.text().length()) {
 
@@ -87,6 +95,7 @@ public class FeedParserImpl implements FeedParser {
                     if (entry.getPublishedDate() != null) {
                         feedEntity.setPublishedAt(entry.getPublishedDate().getTime());
                     }
+                    feedEntity.setPublisher(details.getPublisher());
                     feedEntity.setState(true);
                     feedEntity.setScore(Double.valueOf(feedEntity.getPublishedAt()));
                     feedEntityList.add(feedEntity);
@@ -94,7 +103,7 @@ public class FeedParserImpl implements FeedParser {
 
                 feedsRepository.saveAll(feedEntityList);
             } else {
-                LOGGER.info("Feed is null for " + url);
+                LOGGER.info("Feed is null for " + details);
             }
 
         } catch (Exception e) {

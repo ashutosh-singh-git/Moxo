@@ -1,7 +1,7 @@
 package com.moxo.app.scheduler;
 
+import com.moxo.app.dto.PublisherDetails;
 import com.moxo.app.service.ConfigService;
-import com.moxo.app.dto.UrlParserConfig;
 import com.moxo.app.service.FeedParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -35,10 +35,10 @@ public class FeedScheduler {
     @PostConstruct
     public void scheduleParser() {
         if(configService.getUrlParserConfig() != null) {
-            List<UrlParserConfig.PublisherDetails> publisherList = configService.getUrlParserConfig().getPublisherList();
+            List<PublisherDetails> publisherList = configService.getUrlParserConfig().getPublisherList();
 
-            for (UrlParserConfig.PublisherDetails publisherDetails : publisherList) {
-                feedParser.submit(publisherDetails.getUrl());
+            for (PublisherDetails publisherDetails : publisherList) {
+                feedParser.submit(publisherDetails);
             }
         }
     }

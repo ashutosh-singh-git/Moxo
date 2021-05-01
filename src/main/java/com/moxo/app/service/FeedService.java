@@ -1,14 +1,13 @@
 package com.moxo.app.service;
 
+import com.moxo.app.dto.PublisherDetails;
 import com.moxo.app.entity.FeedEntity;
 import org.springframework.data.domain.Slice;
 
 public interface FeedService {
 
+    Slice<FeedEntity> getFeeds(Integer page, Integer size);
 
-    public Slice<FeedEntity> getFeeds(Integer page, Integer size);
-
-    public boolean parseURL(String url);
-
+    boolean parseURL(PublisherDetails url);
 
 }

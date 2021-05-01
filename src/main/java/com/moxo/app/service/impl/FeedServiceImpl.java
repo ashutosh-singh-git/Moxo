@@ -3,7 +3,7 @@ package com.moxo.app.service.impl;
 import com.moxo.app.dto.PublisherDetails;
 import com.moxo.app.entity.FeedEntity;
 import com.moxo.app.repository.FeedsRepository;
-import com.moxo.app.service.FeedParser;
+import com.moxo.app.service.FeedProcessor;
 import com.moxo.app.service.FeedService;
 import com.moxo.app.util.FeedUtil;
 import org.slf4j.Logger;
@@ -19,12 +19,12 @@ public class FeedServiceImpl implements FeedService {
     private final static Logger LOGGER = LoggerFactory.getLogger(FeedServiceImpl.class);
 
     private final FeedsRepository feedsRepository;
-    private final FeedParser feedParser;
+    private final FeedProcessor feedProcessor;
 
     @Autowired
-    public FeedServiceImpl(FeedsRepository feedsRepository, FeedParser feedParser) {
+    public FeedServiceImpl(FeedsRepository feedsRepository, FeedProcessor feedProcessor) {
         this.feedsRepository = feedsRepository;
-        this.feedParser = feedParser;
+        this.feedProcessor = feedProcessor;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class FeedServiceImpl implements FeedService {
 
     @Override
     public boolean parseURL(PublisherDetails url) {
-        feedParser.submit(url);
+        feedProcessor.submit(url);
         return true;
     }
 }

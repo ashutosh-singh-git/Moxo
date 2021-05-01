@@ -2,7 +2,7 @@ package com.moxo.app.scheduler;
 
 import com.moxo.app.dto.PublisherDetails;
 import com.moxo.app.service.ConfigService;
-import com.moxo.app.service.FeedParser;
+import com.moxo.app.service.FeedProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -22,12 +22,12 @@ public class FeedScheduler {
 //            "https://www.indianrides.com/motorcycle-tour-blog/feed/"
             );
 
-    private final FeedParser feedParser;
+    private final FeedProcessor feedProcessor;
     private final ConfigService configService;
 
     @Autowired
-    public FeedScheduler(FeedParser feedParser, ConfigService configService) {
-        this.feedParser = feedParser;
+    public FeedScheduler(FeedProcessor feedProcessor, ConfigService configService) {
+        this.feedProcessor = feedProcessor;
         this.configService = configService;
     }
 
@@ -38,7 +38,7 @@ public class FeedScheduler {
             List<PublisherDetails> publisherList = configService.getUrlParserConfig().getPublisherList();
 
             for (PublisherDetails publisherDetails : publisherList) {
-                feedParser.submit(publisherDetails);
+                feedProcessor.submit(publisherDetails);
             }
         }
     }

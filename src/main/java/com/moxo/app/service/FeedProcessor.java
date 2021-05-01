@@ -2,7 +2,7 @@ package com.moxo.app.service;
 
 import com.moxo.app.dto.PublisherDetails;
 
-public interface FeedParser {
+public interface FeedProcessor {
 
     void submit(PublisherDetails url);
 }

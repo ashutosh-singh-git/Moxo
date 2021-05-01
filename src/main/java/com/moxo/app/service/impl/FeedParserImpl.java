@@ -61,8 +61,9 @@ public class FeedParserImpl implements FeedParser {
                         if (HTML_TYPES.contains(entry.getDescription().getType())) {
                             Document doc = Jsoup.parse(entry.getDescription().getValue());
                             feedEntity.setDescription(doc.text());
+                        } else {
+                            feedEntity.setDescription(entry.getDescription().getValue());
                         }
-                        feedEntity.setDescription(entry.getDescription().getValue());
                     }
 
                     if (!entry.getContents().isEmpty()) {
@@ -75,10 +76,9 @@ public class FeedParserImpl implements FeedParser {
 
                                     if (StringUtils.hasLength(doc.select("p").text())) {
                                         String text = doc.select("p").text();
-                                        feedEntity.setDescription(text.substring(0, Math.min(text.length(), 250)) + "...");
+                                        feedEntity.setDescription(text);
                                     } else {
-                                        String text = doc.text();
-                                        feedEntity.setDescription(text.substring(0, Math.min(text.length(), 250)) + "...");
+                                        feedEntity.setDescription(doc.text());
                                     }
                                 }
 
@@ -95,6 +95,8 @@ public class FeedParserImpl implements FeedParser {
                     if (entry.getPublishedDate() != null) {
                         feedEntity.setPublishedAt(entry.getPublishedDate().getTime());
                     }
+                    feedEntity.setDescription(feedEntity.getDescription()
+                            .substring(0, Math.min(feedEntity.getDescription().length(), 250)) + "...");
                     feedEntity.setPublisher(details.getPublisher());
                     feedEntity.setState(true);
                     feedEntity.setScore(Double.valueOf(feedEntity.getPublishedAt()));

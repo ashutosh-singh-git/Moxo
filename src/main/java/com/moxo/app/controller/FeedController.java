@@ -18,4 +18,9 @@ public class FeedController {
     public Slice<FeedEntity> fetchData(@RequestParam Integer page, @RequestParam Integer size) {
         return feedService.getFeeds(page, size);
     }
+
+    @GetMapping(value = "/schedule")
+    public boolean scheduleData(@RequestParam String url) {
+        return feedService.parseURL(url);
+    }
 }

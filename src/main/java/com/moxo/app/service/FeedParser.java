@@ -2,5 +2,5 @@ package com.moxo.app.service;
 
 public interface FeedParser {
 
-    void parseFeedUrl(String url);
+    void submit(String url);
 }

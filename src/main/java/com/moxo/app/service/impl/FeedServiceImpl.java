@@ -2,6 +2,7 @@ package com.moxo.app.service.impl;
 
 import com.moxo.app.entity.FeedEntity;
 import com.moxo.app.repository.FeedsRepository;
+import com.moxo.app.service.FeedParser;
 import com.moxo.app.service.FeedService;
 import com.moxo.app.util.FeedUtil;
 import org.slf4j.Logger;
@@ -17,10 +18,12 @@ public class FeedServiceImpl implements FeedService {
     private final static Logger LOGGER = LoggerFactory.getLogger(FeedServiceImpl.class);
 
     private final FeedsRepository feedsRepository;
+    private final FeedParser feedParser;
 
     @Autowired
-    public FeedServiceImpl(FeedsRepository feedsRepository) {
+    public FeedServiceImpl(FeedsRepository feedsRepository, FeedParser feedParser) {
         this.feedsRepository = feedsRepository;
+        this.feedParser = feedParser;
     }
 
     @Override
@@ -30,5 +33,11 @@ public class FeedServiceImpl implements FeedService {
         Pageable pageable = FeedUtil.pageableSortByScore(page, size);
         return feedsRepository.findAllByStateTrue(pageable);
 
+    }
+
+    @Override
+    public boolean parseURL(String url) {
+        feedParser.submit(url);
+        return true;
     }
 }

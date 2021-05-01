@@ -8,4 +8,7 @@ public interface FeedService {
 
     public Slice<FeedEntity> getFeeds(Integer page, Integer size);
 
+    public boolean parseURL(String url);
+
+
 }

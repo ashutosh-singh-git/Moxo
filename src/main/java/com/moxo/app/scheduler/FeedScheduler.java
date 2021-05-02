@@ -31,8 +31,7 @@ public class FeedScheduler {
         this.configService = configService;
     }
 
-    @Scheduled(fixedDelay = 4*60*60*1000)
-    @PostConstruct
+    @Scheduled(cron = "0 0 */4 * * *")
     public void scheduleParser() {
         if(configService.getUrlParserConfig() != null) {
             List<PublisherDetails> publisherList = configService.getUrlParserConfig().getPublisherList();

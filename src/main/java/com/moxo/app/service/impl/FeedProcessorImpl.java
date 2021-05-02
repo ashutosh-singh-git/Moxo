@@ -4,7 +4,6 @@ import com.moxo.app.dto.PublisherDetails;
 import com.moxo.app.entity.FeedEntity;
 import com.moxo.app.repository.FeedsRepository;
 import com.moxo.app.service.FeedProcessor;
-import com.moxo.app.service.parser.DefaultParser;
 import com.moxo.app.service.parser.Parser;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -70,6 +69,7 @@ public class FeedProcessorImpl implements FeedProcessor {
                     feedEntity.setDescription(parser.getDescription(entry));
                     feedEntity.setImg(parser.getImage(entry));
                     feedEntity.setPublisher(parser.getPublisher(details));
+                    feedEntity.setCat(parser.getCategories(entry));
                     feedEntity.setState(parser.getState());
                     feedEntity.setScore(Double.valueOf(feedEntity.getPublishedAt()));
 

@@ -28,21 +28,21 @@ public class FeedProcessorImpl implements FeedProcessor {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FeedProcessorImpl.class);
     private final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(2);
-    private final Map<String, DefaultParser> parserMap = new HashMap<>();
+    private final Map<String, Parser> parserMap = new HashMap<>();
 
     private final FeedsRepository feedsRepository;
-    private final List<DefaultParser> parsers;
+    private final List<Parser> parsers;
 
     @Autowired
-    public FeedProcessorImpl(FeedsRepository feedsRepository, List<DefaultParser> parsers) {
+    public FeedProcessorImpl(FeedsRepository feedsRepository, List<Parser> parsers) {
         this.feedsRepository = feedsRepository;
         this.parsers = parsers;
-        for (DefaultParser parser : parsers) {
+        for (Parser parser : parsers) {
             parserMap.put(parser.getSource(), parser);
         }
     }
 
-    private DefaultParser getParser(String publisher) {
+    private Parser getParser(String publisher) {
         return parserMap.getOrDefault(publisher.toUpperCase(), parserMap.get("DEFAULT"));
     }
 
@@ -66,7 +66,9 @@ public class FeedProcessorImpl implements FeedProcessor {
                     feedEntity.setTitle(parser.getTitle(entry));
                     feedEntity.setAuthor(parser.getAuthor(entry));
                     feedEntity.setLink(parser.getLink(entry));
+                    feedEntity.setPublishedAt(parser.getPublishedAt(entry));
                     feedEntity.setDescription(parser.getDescription(entry));
+                    feedEntity.setImg(parser.getImage(entry));
                     feedEntity.setPublisher(parser.getPublisher(details));
                     feedEntity.setState(parser.getState());
                     feedEntity.setScore(Double.valueOf(feedEntity.getPublishedAt()));

@@ -10,4 +10,5 @@ public interface FeedService {
 
     boolean parseURL(PublisherDetails url);
 
+    boolean onFeedClick(String feedId);
 }

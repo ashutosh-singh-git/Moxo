@@ -41,4 +41,10 @@ public class FeedServiceImpl implements FeedService {
         feedProcessor.submit(url);
         return true;
     }
+
+    @Override
+    public boolean onFeedClick(String feedId) {
+        return false;
+    }
+
 }

@@ -52,7 +52,7 @@ public class FeedProcessorImpl implements FeedProcessor {
 
     private void parseUrl(PublisherDetails details) {
         try {
-            SyndFeed rssFeed = new SyndFeedInput().build(new XmlReader(new URL(details.getUrl())));
+            SyndFeed rssFeed = new SyndFeedInput().build(new XmlReader(new URL(details.url())));
 
             if (rssFeed != null) {
 
@@ -60,7 +60,7 @@ public class FeedProcessorImpl implements FeedProcessor {
                 var feedEntityList = new ArrayList<FeedEntity>();
                 for (SyndEntry entry : entries) {
 
-                    Parser parser = getParser(details.getPublisher());
+                    Parser parser = getParser(details.publisher());
                     FeedEntity feedEntity = new FeedEntity();
                     feedEntity.setTitle(parser.getTitle(entry));
                     feedEntity.setAuthor(parser.getAuthor(entry));

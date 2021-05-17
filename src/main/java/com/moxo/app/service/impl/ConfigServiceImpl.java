@@ -42,8 +42,8 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public void addConfig(ConfigDto configDto) {
         ConfigEntity entity = new ConfigEntity();
-        entity.setConfig(configDto.getConfig());
-        entity.setState(configDto.isState());
+        entity.setConfig(configDto.config());
+        entity.setState(configDto.state());
 
         repository.save(entity);
     }

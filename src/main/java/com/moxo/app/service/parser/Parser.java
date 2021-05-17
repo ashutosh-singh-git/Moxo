@@ -42,7 +42,7 @@ public interface Parser {
     }
 
     public default String getPublisher(PublisherDetails publisherDetails) {
-        return publisherDetails.getPublisher();
+        return publisherDetails.publisher();
     }
 
     public default List<String> getCategories(SyndEntry entry) {

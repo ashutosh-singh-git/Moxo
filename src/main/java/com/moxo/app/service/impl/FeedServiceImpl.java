@@ -31,7 +31,7 @@ public class FeedServiceImpl implements FeedService {
     public Slice<FeedEntity> getFeeds(Integer page, Integer size) {
 
         LOGGER.info("Feed request for: " + page + ", " + size);
-        Pageable pageable = FeedUtil.pageableSortByScore(page, size);
+        Pageable pageable = FeedUtil.pageableSortByLatest(page, size);
         return feedsRepository.findAllByStateTrue(pageable);
 
     }
@@ -44,7 +44,10 @@ public class FeedServiceImpl implements FeedService {
 
     @Override
     public boolean onFeedClick(String feedId) {
-        return false;
+        //Searching algo: (0.02clicks + 1)/(1 + 0.4Tc - 0.3(Tc-Tu))
+        // Tc is creation time in hours ago, Tu is updation time
+        LOGGER.info("Feed clicked : " + feedId);
+        return true;
     }
 
 }

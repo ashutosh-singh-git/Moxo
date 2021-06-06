@@ -1,5 +1,10 @@
 ## Useful Commands
 
+
+###``Build and Run Application``
+```mvn clean install && java -jar target/moxo-0.0.1-SNAPSHOT.jar```
+
+
 ###``Create User``
 ```db.createUser({user: "local",pwd: "local",roles: [ "readWrite", "dbAdmin" ]});```
 

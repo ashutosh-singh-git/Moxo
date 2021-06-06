@@ -68,13 +68,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoResponse createUser(UserCreateDto createDto) {
 
-        boolean isOldUser = switch (createDto.getLogMode()) {
-            case EMAIL -> checkIfEmailExists(createDto.getEmail());
-            case MSISDN -> checkIfMsisdnExists(createDto.getMsisdn());
-        };
-
-        if (isOldUser) {
-            throw new RuntimeException("User Already Present");
+        switch (createDto.getLogMode()) {
+            case EMAIL -> {
+                checkIfEmailExists(createDto.getEmail());
+                verifyOtp(createDto.getEmail(), createDto.getOtp());
+            }
+            case MSISDN -> {
+                checkIfMsisdnExists(createDto.getMsisdn());
+                verifyOtp(createDto.getMsisdn(), createDto.getOtp());
+            }
         }
 
         UserEntity entity = UserEntity.builder()
@@ -94,20 +96,32 @@ public class UserServiceImpl implements UserService {
                 newEntity.getMsisdn());
     }
 
-    private boolean checkIfMsisdnExists(String msisdn){
-        if(!StringUtils.hasLength(msisdn)) {
-            return false;
+    private void verifyOtp(String key, String otp) {
+        String systemOtp = otpService.fetchOtp(key);
+
+        if(!otp.equals(systemOtp)) {
+            throw new RuntimeException("Otp is invalid/expired!");
         }
-        UserEntity byMsisdn = userRepository.findByMsisdn(msisdn);
-        return byMsisdn != null;
     }
 
-    private boolean checkIfEmailExists(String email) {
+    private void checkIfMsisdnExists(String msisdn){
+        if (!StringUtils.hasLength(msisdn)) {
+            throw new RuntimeException("Msisdn Id is empty");
+        }
+        UserEntity byMsisdn = userRepository.findByMsisdn(msisdn);
+        if (byMsisdn != null) {
+            throw new RuntimeException("User Already Present");
+        }
+    }
+
+    private void checkIfEmailExists(String email) {
         if(!StringUtils.hasLength(email)) {
-            return false;
+            throw new RuntimeException("Email Id is empty");
         }
         UserEntity byEmail = userRepository.findByEmail(email);
-        return byEmail != null;
+        if(byEmail != null) {
+            throw new RuntimeException("User Already Present");
+        }
     }
 
     private String generateHashPassword(String pwd) {

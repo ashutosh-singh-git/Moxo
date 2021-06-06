@@ -13,5 +13,5 @@ public class UserCreateDto {
     private String passwd;
     private LoginMode logMode;
     private AcquisitionMode acqMode;
-
+    private String otp;
 }

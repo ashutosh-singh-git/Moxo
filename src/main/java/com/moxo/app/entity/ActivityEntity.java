@@ -2,6 +2,7 @@ package com.moxo.app.entity;
 
 import com.moxo.app.dto.ActivityMedia;
 import com.moxo.app.dto.ActivityUser;
+import com.moxo.app.dto.State;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,4 +27,5 @@ public class ActivityEntity extends BaseEntity {
     private int dislikes;
     private List<String> comments;
     private int ranking;
+    private State state;
 }

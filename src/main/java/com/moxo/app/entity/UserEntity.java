@@ -3,6 +3,7 @@ package com.moxo.app.entity;
 import com.moxo.app.dto.AcquisitionMode;
 import com.moxo.app.dto.Gender;
 import com.moxo.app.dto.LoginMode;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Generated;
 import lombok.Getter;
@@ -14,10 +15,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Set;
 
 @Document(collation = "user")
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 public class UserEntity extends BaseEntity {
 
     @Id

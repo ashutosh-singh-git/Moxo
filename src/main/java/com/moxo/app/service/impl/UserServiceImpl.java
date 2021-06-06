@@ -7,7 +7,9 @@ import com.moxo.app.dto.UserInfoResponse;
 import com.moxo.app.dto.UserLoginDto;
 import com.moxo.app.entity.UserEntity;
 import com.moxo.app.repository.UserRepository;
+import com.moxo.app.service.OtpService;
 import com.moxo.app.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -23,9 +25,12 @@ public class UserServiceImpl implements UserService {
     private static final String SALT = "dakv345";
 
     private final UserRepository userRepository;
+    private final OtpService otpService;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, OtpService otpService) {
         this.userRepository = userRepository;
+        this.otpService = otpService;
     }
 
     @Override
@@ -55,7 +60,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public BaseResponse generateCode(GenerateCodeDto codeDto) {
-        return null;
+        String otp = otpService.generateOtp(codeDto.getEmail());
+
+        return new BaseResponse("Otp is generated on your id ", "012", true);
     }
 
     @Override

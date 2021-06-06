@@ -4,6 +4,8 @@
 ###``Build and Run Application``
 ```mvn clean install && java -jar target/moxo-0.0.1-SNAPSHOT.jar```
 
+###``Swagger URL``
+```http://localhost:8080/swagger-ui/```
 
 ###``Create User``
 ```db.createUser({user: "local",pwd: "local",roles: [ "readWrite", "dbAdmin" ]});```

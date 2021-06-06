@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Set;
 
-@Document(collation = "user")
+@Document("user")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 public class BaseResponse {
     private String msg;
-    private String code;
+    private String errorCode;
     private boolean status;
 }

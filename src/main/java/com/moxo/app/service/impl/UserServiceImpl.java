@@ -9,6 +9,8 @@ import com.moxo.app.entity.UserEntity;
 import com.moxo.app.repository.UserRepository;
 import com.moxo.app.service.OtpService;
 import com.moxo.app.service.UserService;
+import com.moxo.app.util.MoxoException;
+import com.moxo.app.util.ResponseCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +48,11 @@ public class UserServiceImpl implements UserService {
             case MSISDN -> userEntity = userRepository.findByMsisdn(loginDto.getMsisdn());
         }
 
-        if(userEntity == null) {
+        if (userEntity == null) {
             throw new RuntimeException("User doesn't exists");
         }
 
-        if(userEntity.getPasswd().equals(generateHashPassword(loginDto.getPasswd()))) {
+        if (userEntity.getPasswd().equals(generateHashPassword(loginDto.getPasswd()))) {
             throw new RuntimeException("Password doesn't match!!");
         }
 
@@ -63,7 +65,6 @@ public class UserServiceImpl implements UserService {
         LOGGER.info("Otp generated : " + otp);
         return BaseResponse.builder()
                 .msg("Otp is generated on your id " + codeDto.getEmail())
-                .code("012")
                 .status(true)
                 .build();
     }
@@ -99,14 +100,14 @@ public class UserServiceImpl implements UserService {
     private void verifyOtp(String key, String otp) {
         String systemOtp = otpService.fetchOtp(key);
 
-        if(!otp.equals(systemOtp)) {
+        if (!otp.equals(systemOtp)) {
             throw new RuntimeException("Otp is invalid/expired!");
         }
     }
 
-    private void checkIfMsisdnExists(String msisdn){
+    private void checkIfMsisdnExists(String msisdn) {
         if (!StringUtils.hasLength(msisdn)) {
-            throw new RuntimeException("Msisdn Id is empty");
+            throw new MoxoException(ResponseCode.M001, "Msisdn Id is empty");
         }
         UserEntity byMsisdn = userRepository.findByMsisdn(msisdn);
         if (byMsisdn != null) {
@@ -115,11 +116,11 @@ public class UserServiceImpl implements UserService {
     }
 
     private void checkIfEmailExists(String email) {
-        if(!StringUtils.hasLength(email)) {
+        if (!StringUtils.hasLength(email)) {
             throw new RuntimeException("Email Id is empty");
         }
         UserEntity byEmail = userRepository.findByEmail(email);
-        if(byEmail != null) {
+        if (byEmail != null) {
             throw new RuntimeException("User Already Present");
         }
     }

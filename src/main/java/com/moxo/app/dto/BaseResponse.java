@@ -1,4 +1,12 @@
 package com.moxo.app.dto;
 
-public record BaseResponse(String msg, String code, boolean status) {
+import lombok.Builder;
+import lombok.Getter;
+
+@Builder
+@Getter
+public class BaseResponse {
+    private String msg;
+    private String code;
+    private boolean status;
 }

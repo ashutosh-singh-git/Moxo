@@ -9,6 +9,8 @@ import com.moxo.app.entity.UserEntity;
 import com.moxo.app.repository.UserRepository;
 import com.moxo.app.service.OtpService;
 import com.moxo.app.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -22,6 +24,7 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     private static final String SALT = "dakv345";
 
     private final UserRepository userRepository;
@@ -51,18 +54,18 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Password doesn't match!!");
         }
 
-        return new UserInfoResponse(userEntity.getUid(),
-                userEntity.getName(),
-                userEntity.getAlias(),
-                userEntity.getEmail(),
-                userEntity.getMsisdn());
+        return new UserInfoResponse(userEntity);
     }
 
     @Override
     public BaseResponse generateCode(GenerateCodeDto codeDto) {
         String otp = otpService.generateOtp(codeDto.getEmail());
-
-        return new BaseResponse("Otp is generated on your id ", "012", true);
+        LOGGER.info("Otp generated : " + otp);
+        return BaseResponse.builder()
+                .msg("Otp is generated on your id " + codeDto.getEmail())
+                .code("012")
+                .status(true)
+                .build();
     }
 
     @Override
@@ -79,6 +82,7 @@ public class UserServiceImpl implements UserService {
             }
         }
 
+        LOGGER.info("Creating user from : " + createDto);
         UserEntity entity = UserEntity.builder()
                 .acqMode(createDto.getAcqMode())
                 .logMode(Set.of(createDto.getLogMode()))
@@ -89,11 +93,7 @@ public class UserServiceImpl implements UserService {
                 .build();
         UserEntity newEntity = userRepository.insert(entity);
 
-        return new UserInfoResponse(newEntity.getUid(),
-                newEntity.getName(),
-                newEntity.getAlias(),
-                newEntity.getEmail(),
-                newEntity.getMsisdn());
+        return new UserInfoResponse(newEntity);
     }
 
     private void verifyOtp(String key, String otp) {

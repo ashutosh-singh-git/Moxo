@@ -4,7 +4,6 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCache;
-import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,16 +17,16 @@ public class MoxoCacheConfig {
 
     public static final String USER = "USER";
     public static final String OTP = "USER";
+    public static final String SEARCH = "SEARCH";
 
     @Bean
     public CacheManager cacheManager() {
 
         CaffeineCache userCache = buildCache(USER, 15, 100);
+        CaffeineCache searchCache = buildCache(SEARCH, 10, 100);
         CaffeineCache otpCache = buildCache(OTP, 5, 500);
         SimpleCacheManager manager = new SimpleCacheManager();
-        manager.setCaches(Arrays.asList(userCache, otpCache));
-//        CaffeineCacheManager cacheManager = new CaffeineCacheManager();
-//        cacheManager.setCaffeine(buildCache("users", 10, 100));
+        manager.setCaches(Arrays.asList(userCache, otpCache, searchCache));
         return manager;
     }
 

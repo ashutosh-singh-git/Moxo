@@ -15,7 +15,7 @@ public class OtpServiceImpl implements OtpService {
 
 
     @Override
-    @CachePut
+    @Cacheable
     public String generateOtp(String key) {
         Random random = new Random();
         int otp = 100000 + random.nextInt(900000);

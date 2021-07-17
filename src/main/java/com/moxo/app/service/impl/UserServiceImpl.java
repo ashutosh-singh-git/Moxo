@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
         LOGGER.info("Otp generated : " + otp);
         return BaseResponse.builder()
                 .msg("Otp is generated on your id " + codeDto.getEmail())
-                .status(true)
+                .success(true)
                 .build();
     }
 

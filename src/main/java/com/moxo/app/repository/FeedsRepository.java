@@ -1,7 +1,6 @@
 package com.moxo.app.repository;
 
 import com.moxo.app.entity.FeedEntity;
-import com.moxo.app.entity.UserEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.mongodb.core.query.TextCriteria;

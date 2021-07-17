@@ -1,6 +1,6 @@
 package com.moxo.app.service.parser;
 
-import com.moxo.app.util.FeedUtil;
+import com.moxo.app.util.MoxoUtil;
 import com.rometools.rome.feed.synd.SyndEntry;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,7 +19,7 @@ public class VisorDownDefaultParser implements Parser {
     public String getDescription(SyndEntry entry) {
         String text = "";
         if (entry.getDescription() != null) {
-            if (FeedUtil.HTML_TYPES.contains(entry.getDescription().getType())) {
+            if (MoxoUtil.HTML_TYPES.contains(entry.getDescription().getType())) {
                 Document doc = Jsoup.parse(entry.getDescription().getValue());
                 text = doc.text();
             } else {
@@ -32,7 +32,7 @@ public class VisorDownDefaultParser implements Parser {
     @Override
     public String getImage(SyndEntry entry) {
         if (entry.getDescription() != null) {
-            if (FeedUtil.HTML_TYPES.contains(entry.getDescription().getType())) {
+            if (MoxoUtil.HTML_TYPES.contains(entry.getDescription().getType())) {
                 Document doc = Jsoup.parse(entry.getDescription().getValue());
                 Element imageElement = doc.select("img").first();
                 if (imageElement != null) {

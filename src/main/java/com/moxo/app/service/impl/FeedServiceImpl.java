@@ -1,11 +1,12 @@
 package com.moxo.app.service.impl;
 
+import com.moxo.app.dto.PageableResponse;
 import com.moxo.app.dto.PublisherDetails;
 import com.moxo.app.entity.FeedEntity;
 import com.moxo.app.repository.FeedsRepository;
 import com.moxo.app.service.FeedProcessor;
 import com.moxo.app.service.FeedService;
-import com.moxo.app.util.FeedUtil;
+import com.moxo.app.util.MoxoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,20 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public Slice<FeedEntity> getFeeds(Integer page, Integer size) {
+    public PageableResponse<FeedEntity> getFeeds(Integer page, Integer size) {
 
         LOGGER.info("Feed request for: " + page + ", " + size);
-        Pageable pageable = FeedUtil.pageableSortByLatest(page, size);
-        return feedsRepository.findAllByStateTrue(pageable);
+        Pageable pageable = MoxoUtil.pageableSortByLatest(page, size);
+        Slice<FeedEntity> slice = feedsRepository.findAllByStateTrue(pageable);
 
+        return PageableResponse.<FeedEntity>builder()
+                .content(slice.getContent())
+                .empty(slice.isEmpty())
+                .first(slice.isFirst())
+                .last(slice.isLast())
+                .number(slice.getNumber())
+                .size(slice.getSize())
+                .build();
     }
 
     @Override

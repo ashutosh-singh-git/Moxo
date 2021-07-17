@@ -1,10 +1,10 @@
 package com.moxo.app.controller;
 
+import com.moxo.app.dto.PageableResponse;
 import com.moxo.app.dto.PublisherDetails;
 import com.moxo.app.entity.FeedEntity;
 import com.moxo.app.service.FeedService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +20,7 @@ public class FeedController {
     private FeedService feedService;
 
     @GetMapping
-    public Slice<FeedEntity> fetchData(@RequestParam Integer page, @RequestParam Integer size) {
+    public PageableResponse<FeedEntity> fetchData(@RequestParam Integer page, @RequestParam Integer size) {
         return feedService.getFeeds(page, size);
     }
 

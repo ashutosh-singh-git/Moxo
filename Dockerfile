@@ -16,4 +16,4 @@ COPY pom.xml /opt
 RUN mvn -f /opt/pom.xml clean install
 
 COPY target/*.jar /opt/app.jar
-ENTRYPOINT exec java $JAVA_OPTS -jar app.jar
+ENTRYPOINT exec java $JAVA_OPTS --enable-preview -jar app.jar

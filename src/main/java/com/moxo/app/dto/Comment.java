@@ -10,7 +10,7 @@ import lombok.Setter;
 @ApiModel
 public class Comment {
 
-    @ApiModelProperty("Unique id of comment per activity")
+    @ApiModelProperty(value = "Unique id of comment per activity", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     private String id;
     @ApiModelProperty("Comments. Max 500 words")
     private String comment;

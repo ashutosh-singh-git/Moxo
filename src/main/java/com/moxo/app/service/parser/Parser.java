@@ -1,7 +1,10 @@
 package com.moxo.app.service.parser;
 
 import com.moxo.app.dto.PublisherDetails;
+import com.rometools.rome.feed.synd.SyndCategory;
 import com.rometools.rome.feed.synd.SyndEntry;
+
+import java.util.List;
 
 public interface Parser {
 
@@ -39,7 +42,11 @@ public interface Parser {
     }
 
     public default String getPublisher(PublisherDetails publisherDetails) {
-        return publisherDetails.getPublisher();
+        return publisherDetails.publisher();
+    }
+
+    public default List<String> getCategories(SyndEntry entry) {
+        return entry.getCategories().stream().map(SyndCategory::getName).toList();
     }
 
     public default boolean getState() {

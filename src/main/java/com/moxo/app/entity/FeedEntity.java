@@ -3,10 +3,7 @@ package com.moxo.app.entity;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,7 +14,7 @@ import java.util.List;
 @Document(collection = "feed")
 @Getter
 @Setter
-public class FeedEntity {
+public class FeedEntity extends BaseEntity {
 
     @Id
     @Generated
@@ -46,15 +43,6 @@ public class FeedEntity {
 
     @TextIndexed(weight = 2)
     private String publisher;
-
-    @Version
-    private Long version;
-
-    @CreatedDate
-    private Long createdAt;
-
-    @LastModifiedDate
-    private Long updatedAt;
 
     private boolean state;
 

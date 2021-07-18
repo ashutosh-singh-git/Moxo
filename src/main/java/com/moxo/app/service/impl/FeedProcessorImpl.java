@@ -4,7 +4,6 @@ import com.moxo.app.dto.PublisherDetails;
 import com.moxo.app.entity.FeedEntity;
 import com.moxo.app.repository.FeedsRepository;
 import com.moxo.app.service.FeedProcessor;
-import com.moxo.app.service.parser.DefaultParser;
 import com.moxo.app.service.parser.Parser;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -53,7 +52,7 @@ public class FeedProcessorImpl implements FeedProcessor {
 
     private void parseUrl(PublisherDetails details) {
         try {
-            SyndFeed rssFeed = new SyndFeedInput().build(new XmlReader(new URL(details.getUrl())));
+            SyndFeed rssFeed = new SyndFeedInput().build(new XmlReader(new URL(details.url())));
 
             if (rssFeed != null) {
 
@@ -61,7 +60,7 @@ public class FeedProcessorImpl implements FeedProcessor {
                 var feedEntityList = new ArrayList<FeedEntity>();
                 for (SyndEntry entry : entries) {
 
-                    Parser parser = getParser(details.getPublisher());
+                    Parser parser = getParser(details.publisher());
                     FeedEntity feedEntity = new FeedEntity();
                     feedEntity.setTitle(parser.getTitle(entry));
                     feedEntity.setAuthor(parser.getAuthor(entry));
@@ -70,6 +69,7 @@ public class FeedProcessorImpl implements FeedProcessor {
                     feedEntity.setDescription(parser.getDescription(entry));
                     feedEntity.setImg(parser.getImage(entry));
                     feedEntity.setPublisher(parser.getPublisher(details));
+                    feedEntity.setCat(parser.getCategories(entry));
                     feedEntity.setState(parser.getState());
                     feedEntity.setScore(Double.valueOf(feedEntity.getPublishedAt()));
 

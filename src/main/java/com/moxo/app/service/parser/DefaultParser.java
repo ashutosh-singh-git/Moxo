@@ -1,6 +1,6 @@
 package com.moxo.app.service.parser;
 
-import com.moxo.app.util.FeedUtil;
+import com.moxo.app.util.MoxoUtil;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
 import org.jsoup.Jsoup;
@@ -22,7 +22,7 @@ public class DefaultParser implements Parser {
 
         if (!entry.getContents().isEmpty()) {
             for (SyndContent content : entry.getContents()) {
-                if (FeedUtil.HTML_TYPES.contains(content.getType())) {
+                if (MoxoUtil.HTML_TYPES.contains(content.getType())) {
                     Document doc = Jsoup.parse(content.getValue());
                     if (text.length() < doc.text().length()) {
 
@@ -44,7 +44,7 @@ public class DefaultParser implements Parser {
     public String getImage(SyndEntry entry) {
         if (!entry.getContents().isEmpty()) {
             for (SyndContent content : entry.getContents()) {
-                if (FeedUtil.HTML_TYPES.contains(content.getType())) {
+                if (MoxoUtil.HTML_TYPES.contains(content.getType())) {
                     Document doc = Jsoup.parse(content.getValue());
                     Element imageElement = doc.select("img").first();
                     if (imageElement != null) {

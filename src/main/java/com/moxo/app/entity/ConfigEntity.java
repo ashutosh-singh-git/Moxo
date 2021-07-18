@@ -14,22 +14,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "config")
 @Getter
 @Setter
-public class ConfigEntity {
+public class ConfigEntity extends BaseEntity {
 
     @Id
     @Generated
     private String id;
 
     private BaseConfig config;
-
-    @Version
-    private Long version;
-
-    @CreatedDate
-    private Long createdAt;
-
-    @LastModifiedDate
-    private Long updatedAt;
 
     private boolean state;
 

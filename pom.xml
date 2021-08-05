@@ -106,6 +106,9 @@
                         <environment>
                             <mongo_host>host.docker.internal</mongo_host>
                         </environment>
+                        <jvmFlags>
+                            <jvmFlag>--enable-preview</jvmFlag>
+                        </jvmFlags>
                     </container>
                 </configuration>
             </plugin>

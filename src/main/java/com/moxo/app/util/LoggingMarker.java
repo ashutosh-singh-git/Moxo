@@ -8,4 +8,5 @@ public interface LoggingMarker {
     Marker INVALID_REQUEST_ERROR = MarkerFactory.getMarker("INVALID_REQUEST_ERROR");
     Marker ACTIVITY_POST_ERROR = MarkerFactory.getMarker("ACTIVITY_POST_ERROR");
     Marker ACTIVITY_NOT_FOUND = MarkerFactory.getMarker("ACTIVITY_NOT_FOUND");
+    Marker PAW_PAGE_NOT_FOUND = MarkerFactory.getMarker("PAW_PAGE_NOT_FOUND");
 }

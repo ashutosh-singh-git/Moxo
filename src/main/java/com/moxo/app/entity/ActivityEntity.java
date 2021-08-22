@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collation = "activity")
+@Document(collection = "activity")
 @Getter
 @Setter
 public class ActivityEntity extends BaseEntity {

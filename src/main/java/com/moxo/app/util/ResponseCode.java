@@ -9,7 +9,9 @@ public enum ResponseCode {
     M002(LoggingMarker.ACTIVITY_POST_ERROR, "Invalid value", HttpStatus.INTERNAL_SERVER_ERROR),
     M003(LoggingMarker.ACTIVITY_NOT_FOUND, "Activity not found", HttpStatus.NOT_FOUND),
 
-    P001(LoggingMarker.PAW_PAGE_NOT_FOUND, "Paw Page not found", HttpStatus.NOT_FOUND);
+    P001(LoggingMarker.PAW_PAGE_NOT_FOUND, "Paw Page not found", HttpStatus.NOT_FOUND),
+    P002(LoggingMarker.FOSTER_NOT_FOUND, "Foster Details not found", HttpStatus.NOT_FOUND),
+    P003(LoggingMarker.FOSTER_UPDATE_ERROR, "Foster update error", HttpStatus.NOT_FOUND);
 
 
     private final Marker marker;

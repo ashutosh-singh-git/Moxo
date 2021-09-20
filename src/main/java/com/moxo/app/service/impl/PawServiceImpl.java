@@ -1,10 +1,15 @@
 package com.moxo.app.service.impl;
 
+import com.moxo.app.dto.BaseResponse;
 import com.moxo.app.dto.paw.FosterDetails;
-import com.moxo.app.entity.FosterDetailEntity;
-import com.moxo.app.entity.PawPageEntity;
-import com.moxo.app.repository.FosterRepository;
-import com.moxo.app.repository.PawPageRepository;
+import com.moxo.app.dto.paw.LoginUserResponse;
+import com.moxo.app.dto.paw.PawUser;
+import com.moxo.app.entity.paw.FosterDetailEntity;
+import com.moxo.app.entity.paw.PawPageEntity;
+import com.moxo.app.entity.paw.PawUserEntity;
+import com.moxo.app.repository.paw.FosterRepository;
+import com.moxo.app.repository.paw.PawPageRepository;
+import com.moxo.app.repository.paw.PawUserRepository;
 import com.moxo.app.service.PawService;
 import com.moxo.app.util.MoxoException;
 import com.moxo.app.util.ResponseCode;
@@ -23,9 +28,10 @@ public class PawServiceImpl implements PawService {
 
     @Autowired
     private PawPageRepository pageRepository;
-
     @Autowired
     private FosterRepository fosterRepository;
+    @Autowired
+    private PawUserRepository userRepository;
 
     @Override
     public PawPageEntity getLayout(String pageId, Integer page, Integer size) {
@@ -66,6 +72,36 @@ public class PawServiceImpl implements PawService {
         } catch (Exception e) {
             log.error("error while creating foster : ", e);
             throw new MoxoException(ResponseCode.P003, e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public PawPageEntity searchPage(String query) {
+        return null;
+    }
+
+    @Override
+    public PawUser registerUser(PawUser dto) {
+        try {
+            PawUserEntity pawUser = userRepository.save(new PawUserEntity(dto));
+            return new PawUser(pawUser);
+        } catch (Exception e) {
+            log.error("error while creating foster : ", e);
+            throw new MoxoException(ResponseCode.P004, e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public LoginUserResponse loginUser(PawUser dto) {
+        try {
+            Optional<PawUserEntity> pawUser = userRepository.findByEmail(dto.getEmail());
+            if(pawUser.isPresent()) {
+                return new LoginUserResponse(pawUser.get)
+            }
+            throw new MoxoException(ResponseCode.P004, "User does not exist");
+        } catch (Exception e) {
+            log.error("error while creating foster : ", e);
+            throw new MoxoException(ResponseCode.P004, e.getMessage(), e);
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.moxo.app.dto.paw;
 
-import com.moxo.app.entity.FosterDetailEntity;
+import com.moxo.app.entity.paw.FosterDetailEntity;
 import lombok.Getter;
 import lombok.Setter;
 

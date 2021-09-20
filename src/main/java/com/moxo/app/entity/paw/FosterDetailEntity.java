@@ -1,9 +1,10 @@
-package com.moxo.app.entity;
+package com.moxo.app.entity.paw;
 
 import com.moxo.app.dto.paw.FosterDetails;
 import com.moxo.app.dto.paw.LatLng;
 import com.moxo.app.dto.paw.Reviews;
 import com.moxo.app.dto.paw.Services;
+import com.moxo.app.entity.BaseEntity;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;

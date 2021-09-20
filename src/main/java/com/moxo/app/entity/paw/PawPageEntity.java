@@ -1,7 +1,8 @@
-package com.moxo.app.entity;
+package com.moxo.app.entity.paw;
 
 import com.moxo.app.dto.paw.PageContent;
 import com.moxo.app.dto.paw.PageType;
+import com.moxo.app.entity.BaseEntity;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;

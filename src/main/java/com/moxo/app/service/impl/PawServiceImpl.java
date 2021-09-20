@@ -1,6 +1,5 @@
 package com.moxo.app.service.impl;
 
-import com.moxo.app.dto.BaseResponse;
 import com.moxo.app.dto.paw.FosterDetails;
 import com.moxo.app.dto.paw.LoginUserResponse;
 import com.moxo.app.dto.paw.PawUser;
@@ -96,12 +95,12 @@ public class PawServiceImpl implements PawService {
         try {
             Optional<PawUserEntity> pawUser = userRepository.findByEmail(dto.getEmail());
             if(pawUser.isPresent()) {
-                return new LoginUserResponse(pawUser.get)
+                return new LoginUserResponse(pawUser.get(), "");
             }
-            throw new MoxoException(ResponseCode.P004, "User does not exist");
+            throw new MoxoException(ResponseCode.P005, "User does not exist");
         } catch (Exception e) {
-            log.error("error while creating foster : ", e);
-            throw new MoxoException(ResponseCode.P004, e.getMessage(), e);
+            log.error("error while logging user : ", e);
+            throw new MoxoException(ResponseCode.P005, e.getMessage(), e);
         }
     }
 }

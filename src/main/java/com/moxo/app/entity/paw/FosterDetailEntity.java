@@ -7,6 +7,7 @@ import com.moxo.app.dto.paw.Services;
 import com.moxo.app.entity.BaseEntity;
 import lombok.Generated;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,6 +17,7 @@ import java.util.List;
 @Document(collection = "foster")
 @Getter
 @Setter
+@NoArgsConstructor
 public class FosterDetailEntity extends BaseEntity {
 
     @Id

@@ -2,10 +2,12 @@ package com.moxo.app.dto.paw;
 
 import com.moxo.app.entity.paw.PawUserEntity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class PawUser {
 
     private String id;

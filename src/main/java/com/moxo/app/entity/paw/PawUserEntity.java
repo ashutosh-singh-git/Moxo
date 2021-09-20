@@ -4,6 +4,7 @@ import com.moxo.app.dto.paw.PawUser;
 import com.moxo.app.entity.BaseEntity;
 import lombok.Generated;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "paw_user")
 @Getter
 @Setter
+@NoArgsConstructor
 public class PawUserEntity extends BaseEntity {
 
     @Id

@@ -2,6 +2,7 @@ package com.moxo.app.controller;
 
 import com.moxo.app.dto.BaseResponse;
 import com.moxo.app.dto.paw.FosterDetails;
+import com.moxo.app.dto.paw.LoginUserResponse;
 import com.moxo.app.dto.paw.PawUser;
 import com.moxo.app.entity.paw.PawPageEntity;
 import com.moxo.app.service.PawService;

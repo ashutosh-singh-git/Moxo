@@ -2,12 +2,14 @@ package com.moxo.app.dto.paw;
 
 import com.moxo.app.entity.paw.FosterDetailEntity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class FosterDetails {
 
     private String id;

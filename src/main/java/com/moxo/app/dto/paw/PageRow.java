@@ -5,7 +5,8 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class PageContent {
+public class PageRow {
+    private String id;
     private String title;
     private LayoutType layoutType;
     private TileType tileType;

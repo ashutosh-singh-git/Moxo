@@ -1,6 +1,6 @@
 package com.moxo.app.entity.paw;
 
-import com.moxo.app.dto.paw.PageContent;
+import com.moxo.app.dto.paw.PageRow;
 import com.moxo.app.dto.paw.PageType;
 import com.moxo.app.entity.BaseEntity;
 import lombok.Generated;
@@ -20,5 +20,5 @@ public class PawPageEntity extends BaseEntity {
     @Generated
     private String id;
     private PageType pageType;
-    private List<PageContent> contents;
+    private List<PageRow> contents;
 }

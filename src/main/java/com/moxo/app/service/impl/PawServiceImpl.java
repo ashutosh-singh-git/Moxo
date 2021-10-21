@@ -3,6 +3,7 @@ package com.moxo.app.service.impl;
 import com.moxo.app.dto.paw.FosterDetails;
 import com.moxo.app.dto.paw.LoginUserResponse;
 import com.moxo.app.dto.paw.PawUser;
+import com.moxo.app.dto.paw.UserProfile;
 import com.moxo.app.entity.paw.FosterDetailEntity;
 import com.moxo.app.entity.paw.PawPageEntity;
 import com.moxo.app.entity.paw.PawUserEntity;
@@ -13,6 +14,7 @@ import com.moxo.app.service.PawService;
 import com.moxo.app.util.MoxoException;
 import com.moxo.app.util.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,8 @@ public class PawServiceImpl implements PawService {
     private FosterRepository fosterRepository;
     @Autowired
     private PawUserRepository userRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public PawPageEntity getLayout(String pageId, Integer page, Integer size) {
@@ -96,6 +100,20 @@ public class PawServiceImpl implements PawService {
             Optional<PawUserEntity> pawUser = userRepository.findByEmail(dto.getEmail());
             if(pawUser.isPresent()) {
                 return new LoginUserResponse(pawUser.get(), "");
+            }
+            throw new MoxoException(ResponseCode.P005, "User does not exist");
+        } catch (Exception e) {
+            log.error("error while logging user : ", e);
+            throw new MoxoException(ResponseCode.P005, e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public UserProfile fetchUserProfile(String profileId) {
+        try {
+            Optional<PawUserEntity> pawUser = userRepository.findById(profileId);
+            if(pawUser.isPresent()) {
+                return modelMapper.map(pawUser.get(), UserProfile.class);
             }
             throw new MoxoException(ResponseCode.P005, "User does not exist");
         } catch (Exception e) {

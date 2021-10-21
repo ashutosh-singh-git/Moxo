@@ -11,8 +11,7 @@
 ```db.createUser({user: "local",pwd: "local",roles: [ "readWrite", "dbAdmin" ]});```
 
 ###```Connect to Gcloud```
-```export CLOUDSDK_PYTHON=python2.7```
-```gcloud container clusters get-credentials moxo-gke --zone asia-south1-a```
+```export CLOUDSDK_PYTHON=python2.7 && gcloud container clusters get-credentials moxo-gke --zone asia-south1-a```
 
 ###``List All Pods``
 ```kubectl get pods```

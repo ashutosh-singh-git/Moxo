@@ -4,6 +4,7 @@ import com.moxo.app.dto.BaseResponse;
 import com.moxo.app.dto.paw.FosterDetails;
 import com.moxo.app.dto.paw.LoginUserResponse;
 import com.moxo.app.dto.paw.PawUser;
+import com.moxo.app.dto.paw.UserProfile;
 import com.moxo.app.entity.paw.PawPageEntity;
 import com.moxo.app.service.PawService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,11 @@ public class PawController {
     @PostMapping("/user/login")
     public LoginUserResponse userLogin(@RequestBody PawUser dto) {
         return pawService.loginUser(dto);
+    }
+
+    @GetMapping("/user/profile")
+    public UserProfile userLogin(@RequestParam String profileId) {
+        return pawService.fetchUserProfile(profileId);
     }
 
 }

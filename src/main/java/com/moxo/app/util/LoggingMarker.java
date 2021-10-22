@@ -13,4 +13,5 @@ public interface LoggingMarker {
     Marker FOSTER_NOT_FOUND = MarkerFactory.getMarker("FOSTER_NOT_FOUND");
     Marker FOSTER_UPDATE_ERROR = MarkerFactory.getMarker("FOSTER_UPDATE_ERROR");
     Marker USER_REGISTER_ERROR = MarkerFactory.getMarker("USER_REGISTER_ERROR");
+    Marker CLIENT_CONFIG_ERROR = MarkerFactory.getMarker("CLIENT_CONFIG_ERROR");
 }

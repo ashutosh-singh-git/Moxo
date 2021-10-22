@@ -2,12 +2,15 @@ package com.moxo.app.service.impl;
 
 import com.moxo.app.dto.paw.FosterDetails;
 import com.moxo.app.dto.paw.LoginUserResponse;
+import com.moxo.app.dto.paw.PawConfig;
 import com.moxo.app.dto.paw.PawUser;
 import com.moxo.app.dto.paw.UserProfile;
 import com.moxo.app.entity.paw.FosterDetailEntity;
+import com.moxo.app.entity.paw.PawConfigEntity;
 import com.moxo.app.entity.paw.PawPageEntity;
 import com.moxo.app.entity.paw.PawUserEntity;
 import com.moxo.app.repository.paw.FosterRepository;
+import com.moxo.app.repository.paw.PawConfigRepository;
 import com.moxo.app.repository.paw.PawPageRepository;
 import com.moxo.app.repository.paw.PawUserRepository;
 import com.moxo.app.service.PawService;
@@ -33,6 +36,8 @@ public class PawServiceImpl implements PawService {
     private FosterRepository fosterRepository;
     @Autowired
     private PawUserRepository userRepository;
+    @Autowired
+    private PawConfigRepository configRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -119,6 +124,45 @@ public class PawServiceImpl implements PawService {
         } catch (Exception e) {
             log.error("error while logging user : ", e);
             throw new MoxoException(ResponseCode.P005, e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public PawConfig getClientConfig(String os, String bn) {
+        try {
+            Optional<PawConfigEntity> entityOptional = configRepository.findByOsAndBn(os, bn);
+            if(entityOptional.isPresent()) {
+                return modelMapper.map(entityOptional.get(), PawConfig.class);
+            }
+            throw new MoxoException(ResponseCode.P006, "Config Not present");
+        } catch (Exception e) {
+            log.error("error while getting config : ", e);
+            throw new MoxoException(ResponseCode.P006, e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public PawConfig saveConfig(String os, String bn, Object data) {
+        try {
+            Optional<PawConfigEntity> entityOptional = configRepository.findByOsAndBn(os, bn);
+            if (entityOptional.isPresent()) {
+                PawConfigEntity pawConfigEntity = entityOptional.get();
+                pawConfigEntity.setData(data);
+                PawConfigEntity saved = configRepository.save(pawConfigEntity);
+                return modelMapper.map(saved, PawConfig.class);
+            }
+
+            // Creating new config
+            PawConfigEntity newObj = new PawConfigEntity();
+            newObj.setBn(bn);
+            newObj.setOs(os);
+            newObj.setData(data);
+            newObj.setType("appConfig");
+            PawConfigEntity saved = configRepository.save(newObj);
+            return modelMapper.map(saved, PawConfig.class);
+        } catch (Exception e) {
+            log.error("error while getting config : ", e);
+            throw new MoxoException(ResponseCode.P006, e.getMessage(), e);
         }
     }
 }

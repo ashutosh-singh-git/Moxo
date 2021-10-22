@@ -3,6 +3,7 @@ package com.moxo.app.controller;
 import com.moxo.app.dto.BaseResponse;
 import com.moxo.app.dto.paw.FosterDetails;
 import com.moxo.app.dto.paw.LoginUserResponse;
+import com.moxo.app.dto.paw.PawConfig;
 import com.moxo.app.dto.paw.PawUser;
 import com.moxo.app.dto.paw.UserProfile;
 import com.moxo.app.entity.paw.PawPageEntity;
@@ -55,6 +56,16 @@ public class PawController {
     @GetMapping("/user/profile")
     public UserProfile userLogin(@RequestParam String profileId) {
         return pawService.fetchUserProfile(profileId);
+    }
+
+    @GetMapping("/config/client")
+    public PawConfig appConfig(@RequestParam String bn, @RequestParam String os) {
+        return pawService.getClientConfig(os, bn);
+    }
+
+    @PostMapping("/config/save")
+    public PawConfig createAppConfig(@RequestParam String bn, @RequestParam String os, @RequestBody Object data) {
+        return pawService.saveConfig(os, bn, data);
     }
 
 }

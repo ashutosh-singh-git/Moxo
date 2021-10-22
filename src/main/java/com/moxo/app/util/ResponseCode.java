@@ -13,7 +13,8 @@ public enum ResponseCode {
     P002(LoggingMarker.FOSTER_NOT_FOUND, "Foster Details not found", HttpStatus.NOT_FOUND),
     P003(LoggingMarker.FOSTER_UPDATE_ERROR, "Foster update error", HttpStatus.NOT_FOUND),
     P004(LoggingMarker.USER_REGISTER_ERROR, "User register error", HttpStatus.INTERNAL_SERVER_ERROR),
-    P005(LoggingMarker.USER_REGISTER_ERROR, "User Login error", HttpStatus.BAD_REQUEST);
+    P005(LoggingMarker.USER_REGISTER_ERROR, "User Login error", HttpStatus.BAD_REQUEST),
+    P006(LoggingMarker.CLIENT_CONFIG_ERROR, "User Login error", HttpStatus.INTERNAL_SERVER_ERROR);
 
 
     private final Marker marker;

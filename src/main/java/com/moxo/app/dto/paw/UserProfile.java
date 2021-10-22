@@ -20,7 +20,7 @@ public class UserProfile {
     private String shareLink;
     private List<Review> reviews;
     private List<Tasks> completedTasks;
-    private VerificationAttributes verification;
+    private List<VerificationAttributes> verification;
     private List<Services> services;
     private List<AcceptedPayment> payments;
 }

@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class VerificationAttributes {
     private String type;
-    private Boolean value;
+    private Boolean isVerified;
 }

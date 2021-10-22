@@ -39,10 +39,10 @@ public class PawUserEntity extends BaseEntity {
     private Location location;
     private String shareLink;
     private List<Review> reviews;
-    private List<Tasks> completedTasks;
+    private List<Tasks> tasks;
     private List<VerificationAttributes> verification;
     private List<Services> services;
-    private List<AcceptedPayment> payments;
+    private List<AcceptedPayment> paymentMethods;
 
     public PawUserEntity(PawUser pawUser) {
         this.name = pawUser.getName();

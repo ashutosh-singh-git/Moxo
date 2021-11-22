@@ -3,9 +3,13 @@ package com.moxo.app.service;
 import com.moxo.app.dto.paw.FosterDetails;
 import com.moxo.app.dto.paw.LoginUserResponse;
 import com.moxo.app.dto.paw.PawConfig;
+import com.moxo.app.dto.paw.PawPost;
+import com.moxo.app.dto.paw.PawPostResponse;
 import com.moxo.app.dto.paw.PawUser;
 import com.moxo.app.dto.paw.UserProfile;
 import com.moxo.app.entity.paw.PawPageEntity;
+
+import java.util.List;
 
 public interface PawService {
 
@@ -26,4 +30,10 @@ public interface PawService {
     PawConfig getClientConfig(String os, String bn);
 
     PawConfig saveConfig(String os, String bn, Object data);
+
+    PawPostResponse createPost(PawPost data);
+
+    PawPostResponse fetchPost(String id);
+
+    List<PawPostResponse> fetchPaginatedPost(String pageId, String size);
 }

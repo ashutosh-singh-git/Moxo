@@ -3,15 +3,19 @@ package com.moxo.app.service.impl;
 import com.moxo.app.dto.paw.FosterDetails;
 import com.moxo.app.dto.paw.LoginUserResponse;
 import com.moxo.app.dto.paw.PawConfig;
+import com.moxo.app.dto.paw.PawPost;
+import com.moxo.app.dto.paw.PawPostResponse;
 import com.moxo.app.dto.paw.PawUser;
 import com.moxo.app.dto.paw.UserProfile;
 import com.moxo.app.entity.paw.FosterDetailEntity;
 import com.moxo.app.entity.paw.PawConfigEntity;
 import com.moxo.app.entity.paw.PawPageEntity;
+import com.moxo.app.entity.paw.PawPostEntity;
 import com.moxo.app.entity.paw.PawUserEntity;
 import com.moxo.app.repository.paw.FosterRepository;
 import com.moxo.app.repository.paw.PawConfigRepository;
 import com.moxo.app.repository.paw.PawPageRepository;
+import com.moxo.app.repository.paw.PawPostRepository;
 import com.moxo.app.repository.paw.PawUserRepository;
 import com.moxo.app.service.PawService;
 import com.moxo.app.util.MoxoException;
@@ -21,7 +25,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.moxo.app.util.ResponseCode.P001;
 import static com.moxo.app.util.ResponseCode.P002;
@@ -38,6 +44,8 @@ public class PawServiceImpl implements PawService {
     private PawUserRepository userRepository;
     @Autowired
     private PawConfigRepository configRepository;
+    @Autowired
+    private PawPostRepository pawPostRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -163,6 +171,48 @@ public class PawServiceImpl implements PawService {
         } catch (Exception e) {
             log.error("error while getting config : ", e);
             throw new MoxoException(ResponseCode.P006, e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public PawPostResponse createPost(PawPost data) {
+        try {
+            PawPostEntity map = modelMapper.map(data, PawPostEntity.class);
+            PawPostEntity savedEntity = pawPostRepository.save(map);
+            return modelMapper.map(savedEntity, PawPostResponse.class);
+        } catch (Exception e) {
+            log.error("error while creating post : " + data, e);
+            throw new MoxoException(ResponseCode.P007, e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public PawPostResponse fetchPost(String id) {
+        try {
+            Optional<PawPostEntity> entityOptional = pawPostRepository.findById(id);
+            if (entityOptional.isPresent()) {
+                return modelMapper.map(entityOptional.get(), PawPostResponse.class);
+            }
+            throw new MoxoException(ResponseCode.P007, "Post not found for given id");
+        } catch (Exception e) {
+            log.error("error while getting posts : ", e);
+            throw new MoxoException(ResponseCode.P007, e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<PawPostResponse> fetchPaginatedPost(String pageId, String size) {
+        try {
+            List<PawPostEntity> entities = pawPostRepository.findAll();
+            if (!entities.isEmpty()) {
+                return entities.stream()
+                        .map(pawPostEntity -> modelMapper.map(pawPostEntity, PawPostResponse.class))
+                        .collect(Collectors.toList());
+            }
+            throw new MoxoException(ResponseCode.P007, "No post found!");
+        } catch (Exception e) {
+            log.error("error while getting posts : ", e);
+            throw new MoxoException(ResponseCode.P007, e.getMessage(), e);
         }
     }
 }

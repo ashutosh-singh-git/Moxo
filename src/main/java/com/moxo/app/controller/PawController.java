@@ -4,17 +4,22 @@ import com.moxo.app.dto.BaseResponse;
 import com.moxo.app.dto.paw.FosterDetails;
 import com.moxo.app.dto.paw.LoginUserResponse;
 import com.moxo.app.dto.paw.PawConfig;
+import com.moxo.app.dto.paw.PawPost;
+import com.moxo.app.dto.paw.PawPostResponse;
 import com.moxo.app.dto.paw.PawUser;
 import com.moxo.app.dto.paw.UserProfile;
 import com.moxo.app.entity.paw.PawPageEntity;
 import com.moxo.app.service.PawService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/paw")
@@ -66,6 +71,21 @@ public class PawController {
     @PostMapping("/config/save")
     public PawConfig createAppConfig(@RequestParam String bn, @RequestParam String os, @RequestBody Object data) {
         return pawService.saveConfig(os, bn, data);
+    }
+
+    @PostMapping("/post")
+    public PawPostResponse createFosterPost(@RequestBody PawPost data) {
+        return pawService.createPost(data);
+    }
+
+    @GetMapping("/post")
+    public PawPostResponse createFosterPost(@RequestParam String id) {
+        return pawService.fetchPost(id);
+    }
+
+    @GetMapping("/post/all")
+    public List<PawPostResponse> createFosterPost(@RequestParam String pageId, @RequestParam String size) {
+        return pawService.fetchPaginatedPost(pageId, size);
     }
 
 }

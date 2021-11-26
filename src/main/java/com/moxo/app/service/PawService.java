@@ -36,4 +36,6 @@ public interface PawService {
     PawPostResponse fetchPost(String id);
 
     List<PawPostResponse> fetchPaginatedPost(String pageId, String size);
+
+    UserProfile updateProfile(UserProfile userProfile);
 }

@@ -63,6 +63,11 @@ public class PawController {
         return pawService.fetchUserProfile(profileId);
     }
 
+    @PostMapping("/user/profile")
+    public UserProfile updateProfile(@RequestBody UserProfile userProfile) {
+        return pawService.updateProfile(userProfile);
+    }
+
     @GetMapping("/config/client")
     public PawConfig appConfig(@RequestParam String bn, @RequestParam String os) {
         return pawService.getClientConfig(os, bn);

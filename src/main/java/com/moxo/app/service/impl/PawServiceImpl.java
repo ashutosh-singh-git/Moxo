@@ -55,7 +55,7 @@ public class PawServiceImpl implements PawService {
         try {
             Optional<PawPageEntity> entity = pageRepository.findById(pageId);
 
-            if(entity.isPresent()) {
+            if (entity.isPresent()) {
                 return entity.get();
             }
         } catch (Exception e) {
@@ -70,7 +70,7 @@ public class PawServiceImpl implements PawService {
         try {
             Optional<FosterDetailEntity> entity = fosterRepository.findById(fosterId);
 
-            if(entity.isPresent()) {
+            if (entity.isPresent()) {
                 return new FosterDetails(entity.get());
             }
         } catch (Exception e) {
@@ -111,7 +111,7 @@ public class PawServiceImpl implements PawService {
     public LoginUserResponse loginUser(PawUser dto) {
         try {
             Optional<PawUserEntity> pawUser = userRepository.findByEmail(dto.getEmail());
-            if(pawUser.isPresent()) {
+            if (pawUser.isPresent()) {
                 return new LoginUserResponse(pawUser.get(), "");
             }
             throw new MoxoException(ResponseCode.P005, "User does not exist");
@@ -125,7 +125,7 @@ public class PawServiceImpl implements PawService {
     public UserProfile fetchUserProfile(String profileId) {
         try {
             Optional<PawUserEntity> pawUser = userRepository.findById(profileId);
-            if(pawUser.isPresent()) {
+            if (pawUser.isPresent()) {
                 return modelMapper.map(pawUser.get(), UserProfile.class);
             }
             throw new MoxoException(ResponseCode.P005, "User does not exist");
@@ -136,10 +136,26 @@ public class PawServiceImpl implements PawService {
     }
 
     @Override
+    public UserProfile updateProfile(UserProfile userProfile) {
+        try {
+            Optional<PawUserEntity> pawUser = userRepository.findById(userProfile.getId());
+            if (!pawUser.isPresent()) {
+                throw new MoxoException(ResponseCode.P005, "User does not exist");
+            }
+            PawUserEntity pawUserEntity = modelMapper.map(userProfile, PawUserEntity.class);
+            PawUserEntity saved = userRepository.save(pawUserEntity);
+            return modelMapper.map(saved, UserProfile.class);
+        } catch (Exception e) {
+            log.error("error while updating user profile : ", e);
+            throw new MoxoException(ResponseCode.P005, e.getMessage(), e);
+        }
+    }
+
+    @Override
     public PawConfig getClientConfig(String os, String bn) {
         try {
             Optional<PawConfigEntity> entityOptional = configRepository.findByOsAndBn(os, bn);
-            if(entityOptional.isPresent()) {
+            if (entityOptional.isPresent()) {
                 return modelMapper.map(entityOptional.get(), PawConfig.class);
             }
             throw new MoxoException(ResponseCode.P006, "Config Not present");

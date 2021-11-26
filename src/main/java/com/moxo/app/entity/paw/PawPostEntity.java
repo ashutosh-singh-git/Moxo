@@ -1,10 +1,8 @@
 package com.moxo.app.entity.paw;
 
-import com.moxo.app.dto.paw.FosterDetails;
-import com.moxo.app.dto.paw.LatLng;
 import com.moxo.app.dto.paw.Location;
-import com.moxo.app.dto.paw.Reviews;
-import com.moxo.app.dto.paw.Services;
+import com.moxo.app.dto.paw.PostType;
+import com.moxo.app.dto.paw.PostUser;
 import com.moxo.app.entity.BaseEntity;
 import lombok.Generated;
 import lombok.Getter;
@@ -13,7 +11,6 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
 import java.util.Map;
 
 @Document(collection = "post")
@@ -25,10 +22,10 @@ public class PawPostEntity extends BaseEntity {
     @Id
     @Generated
     private String id;
-    private String title;
-    private Location location;
-    private String userId;
+    private PostUser user;
+    private String desc;
     private String img;
+    private Location location;
+    private PostType type;
     private Map<String, String> meta;
-
 }
